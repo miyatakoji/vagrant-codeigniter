@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>会員登録画面</title>
 
 	<style type="text/css">
 
@@ -70,15 +70,23 @@
 	<h1>会員登録画面</h1>
 
 	<div id="body">
-		<form method=post>
-                       名前<input type="text" value="user_id" >
-                       <br>パスワード<input type="text" value="password">
-                       <br><input type="submit" value="登録">
+		<form method=post action="">
+
+                       <h5>名前</h5>
+                       <input type="text"　name="name" value="お名前" >
+
+                       <h5>メールアドレス</h5>
+                       <input type="text" name="email" id="email" value="メールアドレス">
+
+                       <h5>パスワードを設定してください</h5>
+                       <input type="text" name="pass" id="pass" value="パスワード">
+
+                       <br><input type="submit" name="button" id="button" value="登録">
 
                 </form>
 	</div>
 
-	<p class="footer"></p>
+	
 </div>
 
 </body>
