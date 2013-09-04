@@ -11,3 +11,4 @@
 
 ### Vagrant
 .vagrant
+/codeigniter/nbproject/private/

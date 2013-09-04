@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>会員登録画面</title>
+	<title>ログイン画面</title>
 
 	<style type="text/css">
 
@@ -67,23 +67,21 @@
 <body>
 
 <div id="container">
-	<h1>会員登録画面</h1>
+	<h1>ログイン画面</h1>
 
 	<div id="body">
-		<form method=post action="/index.php/form/create">
-                    
-                       <h5>名前(英数字のみ)</h5>
-                       <input type="text" name="name" id="name" value="testtest" >
+            <form method=post action="">
 
                        <h5>メールアドレス</h5>
-                       <input type="text" name="email" id="email" value="jhsdfkhk@gmail.com">
+                       <input type="text" name="email" id="email" value="メールアドレス">
 
                        <h5>パスワードを設定してください(6文字以上)</h5>
-                       <input type="text" name="pass" id="pass" value="jhdfkhff;">
+                       <input type="text" name="pass" id="pass" value="パスワード">
 
                        <br><input type="submit" name="button" id="button" value="登録">
 
                 </form>
+            <p><a href='<?php $this->load->view->(entry.php)?>'>ユーザ登録はこちらから</a></p>
 	</div>
 
 	
