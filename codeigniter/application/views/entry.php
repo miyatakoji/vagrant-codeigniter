@@ -70,16 +70,22 @@
 	<h1>会員登録画面</h1>
 
 	<div id="body">
+                <?php echo validation_errors(); ?>
+            
 		<form method=post action="/index.php/form/create">
                     
                        <h5>名前(英数字のみ)</h5>
-                       <input type="text" name="name" id="name" value="testtest" >
+                       <input type="text" name="name" id="name" value="" >
 
                        <h5>メールアドレス</h5>
-                       <input type="text" name="email" id="email" value="jhsdfkhk@gmail.com">
+                       <input type="text" name="email" id="email" value="">
 
                        <h5>パスワードを設定してください(6文字以上)</h5>
-                       <input type="text" name="pass" id="pass" value="jhdfkhff;">
+                       <input type="text" name="pass" id="pass" value="">
+                       
+                       <h5>パスワードの確認</h5>
+                       <input type="text" name="passconf" value="" >
+ 
 
                        <br><input type="submit" name="button" id="button" value="登録">
 

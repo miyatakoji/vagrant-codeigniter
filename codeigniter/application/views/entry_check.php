@@ -69,36 +69,38 @@
 <div id="container">
 	<h1>会員登録確認画面</h1>
 
-	<div id="body">
+        <div id="body">
 		<?php
+                /*
+                $this->load->library('session');
+               
+                
                 $name=$this->session->userdata('name');
                 $email=$this->session->userdata('email');
-                $passw=$this->session->userdata('passw');
+                $pass=$this->session->userdata('pass');
+                $passconf=$this->session->userdata('passconf');
+                */
+                
                 ?>
-                  <div id="form">
-                    <table width="400" border="1" align="center">
-                      <tr>
-                        <th colspan="2" scope="row">登録確認</th>
-                      </tr>
-                      <tr>
-                        <th width="156" scope="row">お名前</th>
-                        <td width="228"><label for="name"><?php echo $name;?></label></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">メールアドレス</th>
-                        <td><label for="email"><?php echo $email;?></label></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">パスワード</th>
-                        <td><label for="passw"><?php echo $passw;?></label></td>
-                      </tr>
-                      <tr>
-                        <th colspan="2" scope="row"><?php echo anchor('members/entry','もう一度');?>
-                            <input type="submit" name="button" id="button" value="登録" /></th>
-                      </tr>
-                      </table>
-                </div>
-	</div>
+<form method=post action="db_entry">
+
+        <h5>名前(英数字のみ)</h5>
+        <input type="text" name="name" id="name" value="<?php echo set_value('name'); ?>" >
+
+        <h5>メールアドレス</h5>
+        <input type="text" name="email" id="email" value="<?php echo set_value('email'); ?>">
+
+        <h5>パスワードを設定してください(6文字以上)</h5>
+        <input type="text" name="pass" id="pass" value="<?php echo set_value('pass'); ?>">
+
+        <h5>パスワードの確認</h5>
+        <input type="text" name="passconf" value="<?php echo set_value('passconf'); ?>" >
+
+
+        <br><input type="submit" name="button" id="button" value="登録">
+
+</form>
+        </div>
 
 	
 </div>

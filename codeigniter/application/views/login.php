@@ -69,19 +69,19 @@
 <div id="container">
 	<h1>ログイン画面</h1>
 
-	<div id="body">
+        <div id="body">
             <form method=post action="">
 
-                       <h5>メールアドレス</h5>
-                       <input type="text" name="email" id="email" value="メールアドレス">
+                        <h5>メールアドレスを入力してください</h5>
+                        <input type="text" name="email" id="email" value="メールアドレス">
 
-                       <h5>パスワードを設定してください(6文字以上)</h5>
-                       <input type="text" name="pass" id="pass" value="パスワード">
+                        <h5>パスワードを入力してください</h5>
+                        <input type="text" name="pass" id="pass" value="パスワード">
 
-                       <br><input type="submit" name="button" id="button" value="登録">
+                        <br><input type="submit" name="button" id="button" value="ログイン">
 
-                </form>
-            <p><a href='<?php $this->load->view->(entry.php)?>'>ユーザ登録はこちらから</a></p>
+            </form>
+            <p><a href='index.php/form/create'> ユーザ登録はこちらから </a></p>
 	</div>
 
 	
