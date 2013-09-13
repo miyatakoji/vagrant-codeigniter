@@ -72,22 +72,25 @@
 	<div id="body">
                 <?php echo validation_errors(); ?>
             
-		<form method=post action="/index.php/form/create">
+		<form method=post action="create">
                     
                        <h5>名前(英数字のみ)</h5>
                        <input type="text" name="name" id="name" value="" >
+                       <hr size="1" color="#D0D0D0">
 
                        <h5>メールアドレス</h5>
                        <input type="text" name="email" id="email" value="">
+                       <hr size="1" color="#D0D0D0">
 
                        <h5>パスワードを設定してください(6文字以上)</h5>
                        <input type="text" name="pass" id="pass" value="">
+                       <hr size="1" color="#D0D0D0">
                        
                        <h5>パスワードの確認</h5>
                        <input type="text" name="passconf" value="" >
  
 
-                       <br><input type="submit" name="button" id="button" value="登録">
+                       <br><input type="submit" name="button" id="button" value="入力確認">
 
                 </form>
 	</div>

@@ -70,32 +70,20 @@
 	<h1>会員登録確認画面</h1>
 
         <div id="body">
-		<?php
-                /*
-                $this->load->library('session');
-               
-                
-                $name=$this->session->userdata('name');
-                $email=$this->session->userdata('email');
-                $pass=$this->session->userdata('pass');
-                $passconf=$this->session->userdata('passconf');
-                */
-                
-                ?>
-<form method=post action="db_entry">
+		
+<form method=post action="entry">
 
-        <h5>名前(英数字のみ)</h5>
-        <input type="text" name="name" id="name" value="<?php echo set_value('name'); ?>" >
+        <h5>名前</h5>
+        <input name="name" value="<?php echo set_value('name'); ?>">
+        <hr size="1" color="#D0D0D0">
 
         <h5>メールアドレス</h5>
-        <input type="text" name="email" id="email" value="<?php echo set_value('email'); ?>">
+        <input name="email" value="<?php echo set_value('email'); ?>">
+        <hr size="1" color="#D0D0D0">
 
-        <h5>パスワードを設定してください(6文字以上)</h5>
-        <input type="text" name="pass" id="pass" value="<?php echo set_value('pass'); ?>">
-
-        <h5>パスワードの確認</h5>
-        <input type="text" name="passconf" value="<?php echo set_value('passconf'); ?>" >
-
+        <h5>パスワード</h5>
+        <input name="pass" value="<?php echo set_value('pass'); ?>">
+		<hr size="1" color="#D0D0D0">
 
         <br><input type="submit" name="button" id="button" value="登録">
 

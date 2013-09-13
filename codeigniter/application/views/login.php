@@ -70,18 +70,18 @@
 	<h1>ログイン画面</h1>
 
         <div id="body">
-            <form method=post action="">
+            <form method=post action="login">
 
                         <h5>メールアドレスを入力してください</h5>
-                        <input type="text" name="email" id="email" value="メールアドレス">
+                        <input type="text" name="email" id="email" value="">
 
                         <h5>パスワードを入力してください</h5>
-                        <input type="text" name="pass" id="pass" value="パスワード">
+                        <input type="text" name="pass" id="pass" value="">
 
                         <br><input type="submit" name="button" id="button" value="ログイン">
 
             </form>
-            <p><a href='index.php/form/create'> ユーザ登録はこちらから </a></p>
+            <p><a href='create'> ユーザ登録はこちらから </a></p>
 	</div>
 
 	
