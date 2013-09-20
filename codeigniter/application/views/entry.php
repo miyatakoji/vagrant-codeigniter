@@ -70,24 +70,68 @@
 	<h1>会員登録画面</h1>
 
 	<div id="body">
-                <?php echo validation_errors(); ?>
-            
-		<form method=post action="create">
+                <?php 
+                echo validation_errors(); 
+                
+                $this->load->helper('form');
+
+                echo form_open('form/create');
+                
+                echo '<h5>名前(英数字のみ)</h5>';
+                $data = array(
+              	'name'        => 'name',
+              	'id'          => 'name',
+            	);
+				echo form_input($data);	
+				echo '<hr size="1" color="#D0D0D0">';
+
+				echo '<h5>メールアドレス</h5>';
+				$data = array(
+              	'name'        => 'email',
+              	'id'          => 'email',
+            	);
+				echo form_input($data);
+				echo '<hr size="1" color="#D0D0D0">';
+
+				echo '<h5>パスワードを設定してください(6文字以上)</h5>';
+				$data = array(
+              	'name'        => 'pass',
+              	'id'          => 'pass',
+            	);
+				echo form_input($data);
+				echo '<hr size="1" color="#D0D0D0">';
+
+				echo '<h5>パスワードの確認</h5>';
+				$data = array(
+              	'name'        => 'passconf',
+              	'id'          => 'passconf',
+            	);
+				echo form_input($data);
+				echo '<hr size="1" color="#D0D0D0">';
+
+				echo '<br>';
+				echo form_submit('button', '入力確認');
+
+
+                ?>
+            	
+
+				<form method=post action="create">
                     
                        <h5>名前(英数字のみ)</h5>
-                       <input type="text" name="name" id="name" value="" >
+                       <input type="text" name="name" id="name">
                        <hr size="1" color="#D0D0D0">
 
                        <h5>メールアドレス</h5>
-                       <input type="text" name="email" id="email" value="">
+                       <input type="text" name="email" id="email">
                        <hr size="1" color="#D0D0D0">
 
                        <h5>パスワードを設定してください(6文字以上)</h5>
-                       <input type="text" name="pass" id="pass" value="">
+                       <input type="text" name="pass" id="pass">
                        <hr size="1" color="#D0D0D0">
                        
                        <h5>パスワードの確認</h5>
-                       <input type="text" name="passconf" value="" >
+                       <input type="text" name="passconf">
  
 
                        <br><input type="submit" name="button" id="button" value="入力確認">

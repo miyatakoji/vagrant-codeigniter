@@ -70,6 +70,46 @@
 	<h1>ログイン画面</h1>
 
         <div id="body">
+
+        	<?php 
+            // echo validation_errors(); 
+            
+            $this->load->helper('form');
+
+            echo form_open('form/login');
+
+            echo '<h5>お名前を入力してください</h5>';
+			$data = array(
+          	'name'        => 'name',
+          	'id'          => 'name',
+        	);
+			echo form_input($data);
+			echo '<hr size="1" color="#D0D0D0">';
+            
+    		echo '<h5>メールアドレスを入力してください</h5>';
+			$data = array(
+          	'name'        => 'email',
+          	'id'          => 'emial',
+        	);
+			echo form_input($data);
+			echo '<hr size="1" color="#D0D0D0">';
+
+			echo '<h5>パスワードを入力してください</h5>';
+			$data = array(
+          	'name'        => 'pass',
+          	'id'          => 'pass',
+        	);
+			echo form_input($data);
+			echo '<hr size="1" color="#D0D0D0">';
+
+			echo '<br>';
+			echo form_submit('button', 'ログイン');
+            ?>
+
+
+
+
+
             <form method=post action="login">
 
                         <h5>メールアドレスを入力してください</h5>

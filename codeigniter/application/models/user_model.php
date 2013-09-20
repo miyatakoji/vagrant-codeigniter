@@ -1,10 +1,15 @@
 <?php
 class User_model extends CI_Model {
-
+    var $title = 'User_model';
     
     public function check_email($email)
     {
-        $this->db->like('email', $email); 
+        $this->db->select('email');
+        $this->db->from('accounts');
+        $this->db->where('email', $email); 
+        $query = $this->db->get();
+
+        return $query->num_rows();
     }
 
 
@@ -20,7 +25,6 @@ class User_model extends CI_Model {
         $sql = "INSERT INTO accounts SET name=?,email=?,pass=?,created=?";
         $this->db->query($sql, array($name, $email, $pass, $created));
     }
-
 
 
 }
