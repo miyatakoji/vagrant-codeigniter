@@ -27,4 +27,20 @@ class User_model extends CI_Model {
     }
 
 
+
+    public function login($email)
+    {
+        $this->db->seelect('email,name,pass,id');
+        $this->db->from('accounts');
+        $this->db->where('email',$email);
+        $query = $this->db->get();
+
+        return $user_info = $query->result_array('email'=>$users_email,'pass'=>$users_pass,'name'=>$users_name,'id'=>$users_id);
+        
+        
+}
+
+
+    }
+
 }

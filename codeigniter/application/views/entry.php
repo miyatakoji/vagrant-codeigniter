@@ -116,7 +116,7 @@
                 ?>
             	
 
-				<form method=post action="create">
+				<!-- <form method=post action="create">
                     
                        <h5>名前(英数字のみ)</h5>
                        <input type="text" name="name" id="name">
@@ -136,7 +136,7 @@
 
                        <br><input type="submit" name="button" id="button" value="入力確認">
 
-                </form>
+                </form> -->
 	</div>
 
 	

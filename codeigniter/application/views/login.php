@@ -72,19 +72,11 @@
         <div id="body">
 
         	<?php 
-            // echo validation_errors(); 
+             echo validation_errors(); 
             
             $this->load->helper('form');
 
-            echo form_open('form/login');
-
-            echo '<h5>お名前を入力してください</h5>';
-			$data = array(
-          	'name'        => 'name',
-          	'id'          => 'name',
-        	);
-			echo form_input($data);
-			echo '<hr size="1" color="#D0D0D0">';
+            echo form_open('login/login');
             
     		echo '<h5>メールアドレスを入力してください</h5>';
 			$data = array(
@@ -110,7 +102,7 @@
 
 
 
-            <form method=post action="login">
+       <!--      <form method=post action="login">
 
                         <h5>メールアドレスを入力してください</h5>
                         <input type="text" name="email" id="email" value="">
@@ -120,7 +112,7 @@
 
                         <br><input type="submit" name="button" id="button" value="ログイン">
 
-            </form>
+            </form> -->
             <p><a href='create'> ユーザ登録はこちらから </a></p>
 	</div>
 

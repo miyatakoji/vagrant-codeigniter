@@ -1,7 +1,15 @@
 <?php
 
 class Form extends CI_Controller
-{
+{   
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->helper(array('url','cookie','security','form'));
+        $this->load->library('session');
+      }
+
+
     public function index()
     {
         $this->load->view('entry.php');
@@ -16,6 +24,8 @@ class Form extends CI_Controller
 
     public function create()
     {
+
+
         $this->load->helper(array('form', 'url'));
 
         $this->load->library('form_validation');
@@ -84,7 +94,7 @@ class Form extends CI_Controller
 
 
 
-    public function already_used_email($email)
+    private function already_used_email($email)
     {
         $this->load->model('User_model');
         $user = $this->User_model->check_email($email);
@@ -97,9 +107,9 @@ class Form extends CI_Controller
         };
     }
 
-    public function go() {
-        $this->load->view('login.php');
-    }
+    // public function go() {
+    //     $this->load->view('login.php');
+    // }
 
 
 
@@ -121,13 +131,18 @@ class Form extends CI_Controller
         }
     }
     
-    public function index() {
-        $this->login_check();
-        $this->load->view('login');
-    }
     
     public function logout() {
     $this->session->sess_destroy();
     redirect('form/login_check', 'location');
   }
+
+
+
+    public function tweets(){
+        $this->load->view('tweets.php');
+    }
+
+
+
 }
