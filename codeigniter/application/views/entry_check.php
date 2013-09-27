@@ -70,8 +70,43 @@
 	<h1>会員登録確認画面</h1>
 
         <div id="body">
+		<?php 
+
+        $this->load->helper('form');
+
+        echo form_open('form/entry');
+        
+  //       echo '<h5>お名前</h5>';
+  //       $data = array(
+  //     	'name'        => 'name',
+  //     	'id'          => 'name',
+  //   	);
+		// echo form_input($data);	
+		// echo '<hr size="1" color="#D0D0D0">';
+
+		// echo '<h5>メールアドレス</h5>';
+		// $data = array(
+  //     	'name'        => 'email',
+  //     	'id'          => 'email',
+  //   	);
+		// echo form_input($data);
+		// echo '<hr size="1" color="#D0D0D0">';
+
+		// echo '<h5>パスワード</h5>';
+		// $data = array(
+  //     	'name'        => 'pass',
+  //     	'id'          => 'pass',
+  //   	);
+		// echo form_input($data);
+		// echo '<hr size="1" color="#D0D0D0">';
+
 		
-		<form method=post action="entry">
+		// echo '<br>';
+		// echo form_submit('button', '登録');
+
+
+        ?>
+		<!-- <form method=post action="entry"> -->
 
         <h5>名前</h5>
         <?php echo set_value('name'); ?>

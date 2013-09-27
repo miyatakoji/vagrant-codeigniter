@@ -71,12 +71,11 @@
 
         <div id="body">
 
-        	<?php 
-             echo validation_errors(); 
+        	<?php echo validation_errors(); 
             
             $this->load->helper('form');
 
-            echo form_open('login/login');
+            echo form_open('tweet/toppage');
             
     		echo '<h5>メールアドレスを入力してください</h5>';
 			$data = array(

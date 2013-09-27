@@ -3,22 +3,19 @@
 class Form extends CI_Controller
 {   
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->helper(array('url','cookie','security','form'));
         $this->load->library('session');
-      }
+    }
+
 
 
     public function index()
     {
         $this->load->view('entry.php');
     }
-
-
-
-
-
 
 
 
@@ -59,13 +56,8 @@ class Form extends CI_Controller
 
 
 
-
-
-
     public function entry()
     {
-
-        $this->load->library('session');
 
         $name = $this->session->userdata('name');
         $email = $this->session->userdata('email');
@@ -82,7 +74,7 @@ class Form extends CI_Controller
         //登録後にログインページへ移動
 
         $this->load->helper('url');    
-        redirect('form/login','location');
+        redirect('tweet/toppage','location');
     }
 
 
@@ -91,10 +83,7 @@ class Form extends CI_Controller
 
 
 
-
-
-
-    private function already_used_email($email)
+    public function already_used_email($email)
     {
         $this->load->model('User_model');
         $user = $this->User_model->check_email($email);
@@ -132,16 +121,16 @@ class Form extends CI_Controller
     }
     
     
-    public function logout() {
-    $this->session->sess_destroy();
-    redirect('form/login_check', 'location');
-  }
+    // public function logout() {
+    // $this->session->sess_destroy();
+    // redirect('form/login_check', 'location');
+    // }
 
 
 
-    public function tweets(){
-        $this->load->view('tweets.php');
-    }
+    // public function tweets(){
+    //     $this->load->view('tweets.php');
+    // }
 
 
 
