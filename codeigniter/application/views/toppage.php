@@ -85,8 +85,8 @@
 		<input type="submit" value="ツイート">
 	</form>
 
-	<?php foreach ($ten_tweets as $got_tweets) {
-		 echo $got_tweets['tweet'];
+	<?php foreach ($ten_tweets as $v) {
+		 echo $v['tweet'];
 		 echo '<br>';
 	};
 	// var_dump($ten_tweets);

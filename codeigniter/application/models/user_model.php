@@ -50,7 +50,7 @@ class User_model extends CI_Model {
     {
         $this->db->select('tweet');
         $this->db->from('accounts');
-        $this->db->order_by("tweet", "desc");
+        $this->db->order_by("tweeted_date", "desc");
         $query = $this->db->get('tweets', 10);
 
         // $sql = "select('tweet') from reserve  "

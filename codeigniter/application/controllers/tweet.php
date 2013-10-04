@@ -44,7 +44,6 @@ class Tweet extends CI_Controller
 
     $this->load->model('User_model');
     $get_userdata = $this->User_model->login($email);
-    var_dump($get_userdata);
     if (($get_userdata['email'] === $email)&&($get_userdata['pass'] === $pass)) {
       $this->session->set_userdata('USERNAME', $get_userdata['name']);
       $this->session->set_userdata('USER_STATUS', 'LOGIN');
@@ -138,8 +137,10 @@ class Tweet extends CI_Controller
       $this->User_model->tweet_entry($id,$tweet,$tweeted_date);
 
       $ten_tweets = $this->show_tweet();
+      $data['ten_tweets'] = $ten_tweets;
 
-      $this->load->view('toppage',compact('$ten_tweets'));
+      $this->load->view('toppage', $data);
+      var_dump($ten_tweets);
 
   }
 
