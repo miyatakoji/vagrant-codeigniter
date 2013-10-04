@@ -63,33 +63,35 @@
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+
+	<script type="text/javascript" src="loadmorejs.js"></script>
 </head>
 <body>
 	<header style="background:gray; color:white;">
 		<div>
-			<p>ユーザ名</p>
-			<p>ログアウト</p>
+			<p><?php echo $this->session->userdata('USERNAME'); ?></p>
+			<a href="logout"><p>ログアウト</p></a>
 		</div>
 	</header>
-	<form method="post">
-	<textarea name="tweet" cols="140" rows="5"></textarea>
-	<input type="submit" value="ツイート">
+	<?php 
+	echo validation_errors(); 
+
+	$this->load->helper('form');
+
+	echo form_open('tweet/tweet_entry');
+	?>
+		<textarea name="tweet" cols="140" rows="5"></textarea>
+		<input type="submit" value="ツイート">
 	</form>
 
+	<?php foreach ($ten_tweets as $got_tweets) {
+		 echo $got_tweets['tweet'];
+		 echo '<br>';
+	};
+	// var_dump($ten_tweets);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	?>
 
 
 

@@ -15,7 +15,7 @@ class User_model extends CI_Model {
 
     public function check_pass($pass)
     {
-        $this->db->like('pass', $pass); 
+        $this->db->like('pass', $pass);
     }
 
 
@@ -30,14 +30,39 @@ class User_model extends CI_Model {
 
     public function login($email)
     {
-        $this->db->select('email','name','id','pass');
+        $this->db->select('email,name,id,pass');
         $this->db->from('accounts');
         $this->db->where('email',$email);
         $query = $this->db->get();
 
-        return $query->result_array();
+        return $row = $query->row_array();
+    }
 
-      
-}
+
+    public function tweet_entry($id,$tweet,$tweeted_date)
+    {
+        $sql = "INSERT INTO tweets SET id=?,tweet=?,tweeted_date=?";
+        $this->db->query($sql, array($id,$tweet,$tweeted_date));
+    }
+
+
+    public function show_tweet()
+    {
+        $this->db->select('tweet');
+        $this->db->from('accounts');
+        $this->db->order_by("tweet", "desc");
+        $query = $this->db->get('tweets', 10);
+
+        // $sql = "select('tweet') from reserve  "
+
+        // $query = $this->db->query('SELECT REVERSE(tweet) FROM tweets LIMIT 10');
+
+        return $result = $query->result_array();
+    }
+
+
+
+
+
 
 }
