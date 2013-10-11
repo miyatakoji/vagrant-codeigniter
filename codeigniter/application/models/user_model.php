@@ -39,26 +39,43 @@ class User_model extends CI_Model {
     }
 
 
-    public function tweet_entry($id,$tweet,$tweeted_date)
+    public function tweet_entry($name,$tweet,$tweeted_date)
     {
-        $sql = "INSERT INTO tweets SET id=?,tweet=?,tweeted_date=?";
-        $this->db->query($sql, array($id,$tweet,$tweeted_date));
+        $sql = "INSERT INTO tweets SET name=?,tweet=?,tweeted_date=?";
+        $this->db->query($sql, array($name,$tweet,$tweeted_date));
     }
 
 
     public function show_tweet()
     {
-        $this->db->select('tweet');
-        $this->db->from('accounts');
-        $this->db->order_by("tweeted_date", "desc");
-        $query = $this->db->get('tweets', 10);
-
-        // $sql = "select('tweet') from reserve  "
-
-        // $query = $this->db->query('SELECT REVERSE(tweet) FROM tweets LIMIT 10');
+        $this->db->select('tweet,tweeted_date,name,tweet_number');
+        $this->db->order_by("tweeted_date", 'DESC');
+        $query = $this->db->get('tweets');
 
         return $result = $query->result_array();
     }
+
+
+
+    public function get_tweetinfo()
+    {
+        $tweet_number = $this->db->count_all('tweets');
+
+        $this->db->where('tweet_number', $tweet_number);
+
+        $query = $this->db->get('tweets');
+        return $tweet_info = $query->row_array();
+    }
+
+    // public function more_tweet()
+    // {
+    //     $this->db->select('tweet');
+    //     $this->db->order_by("tweeted_date",'DESC');
+    //     $query = $this->db->get('tweets',10);
+
+    //     return $result = $query->result_array();
+
+    // }
 
 
 

@@ -2,32 +2,16 @@
 
 class Form extends CI_Controller
 {   
-
     public function __construct()
     {
         parent::__construct();
         $this->load->helper(array('url','cookie','security','form'));
-        $this->load->library('session');
+        $this->load->library(array('session','form_validation'));
     }
-
-
-
-    public function index()
-    {
-        $this->load->view('entry.php');
-    }
-
-
 
     public function create()
     {
 
-
-        $this->load->helper(array('form', 'url'));
-
-        $this->load->library('form_validation');
-
-        $this->load->library('session');
 
         $name = $this->input->post('name',true);
         $email = $this->input->post('email',true);
@@ -36,7 +20,6 @@ class Form extends CI_Controller
                         'name' => $name,
                         'email' => $email,
                         'pass' => $pass));
-
 
         $this->form_validation->set_rules('name', 'ユーザ名', 'required|alpha_numeric');
         $this->form_validation->set_rules('email', 'メールアドレス', 'required|valid_email|callback_already_used_email');
@@ -51,11 +34,6 @@ class Form extends CI_Controller
         }
     }
 
-
-
-
-
-
     public function entry()
     {
 
@@ -64,24 +42,14 @@ class Form extends CI_Controller
         $pass = $this->session->userdata('pass');
         $created = date("Y-m-d H:i:s");
         
-        $this->load->database();
-
         $this->load->model('User_model');
         
         $this->User_model->entry($name,$email,$pass,$created);
 
         $this->session->sess_destroy();
-        //登録後にログインページへ移動
-
-        $this->load->helper('url');    
+  
         redirect('tweet/toppage','location');
     }
-
-
-
-
-
-
 
     public function already_used_email($email)
     {
@@ -95,11 +63,6 @@ class Form extends CI_Controller
         
         };
     }
-
-    // public function go() {
-    //     $this->load->view('login.php');
-    // }
-
 
 
 
@@ -121,17 +84,5 @@ class Form extends CI_Controller
     }
     
     
-    // public function logout() {
-    // $this->session->sess_destroy();
-    // redirect('form/login_check', 'location');
-    // }
-
-
-
-    // public function tweets(){
-    //     $this->load->view('tweets.php');
-    // }
-
-
 
 }

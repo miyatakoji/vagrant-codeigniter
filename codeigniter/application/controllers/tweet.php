@@ -2,18 +2,15 @@
 
 class Tweet extends CI_Controller
 {
+
+
+
 	public function __construct()
   {
 	    parent::__construct();
 	    $this->load->helper('url','cookie','form');
 	    $this->load->library(array('session', 'form_validation'));
 	}
-
-
-
-
-
-
 
   public function login_check() 
   {
@@ -24,10 +21,6 @@ class Tweet extends CI_Controller
 
     }
   }
-
-
-
-
 
 
 
@@ -48,7 +41,10 @@ class Tweet extends CI_Controller
       $this->session->set_userdata('USERNAME', $get_userdata['name']);
       $this->session->set_userdata('USER_STATUS', 'LOGIN');
       $this->session->set_userdata('USER_ID',$get_userdata['id']);
-      $this->load->view('toppage');
+      $ten_tweets = $this->show_tweet();
+      $data['ten_tweets'] = $ten_tweets;
+
+      $this->load->view('toppage', $data);
     } else {
       $this->load->view('login');
     };
@@ -60,6 +56,8 @@ class Tweet extends CI_Controller
 
 
 
+
+  //emailバリデーション
 	public function un_entried_email($email)
   {
 		$this->load->model('User_model');
@@ -89,11 +87,6 @@ class Tweet extends CI_Controller
   {
 
 
-      $this->load->helper(array('form', 'url'));
-
-      $this->load->library('form_validation');
-
-      $this->load->library('session');
 
       $name = $this->input->post('name',true);
       $email = $this->input->post('email',true);
@@ -117,30 +110,46 @@ class Tweet extends CI_Controller
       }
   }
 
+  public index(){
+    if ($this->session->userdata('USER_STATUS') != 'LOGIN'){
+        return $this->load->view('login');
+    }
+
+  }
+
 
 
   public function tweet_entry()
-  {
+  {   
+      if ($this->session->userdata('USER_STATUS') != 'LOGIN'){
+        return $this->load->view('login');
+        }
+
       $tweet = $this->input->post('tweet', true);
-      $id = $this->session->userdata('USER_ID');
+      $name = $this->session->userdata('USERNAME');
       $tweeted_date = date("Y-m-d H:i:s");
 
       $this->form_validation->set_rules('tweet', 'ツイート', 'required|max_length[140]');
 
       if ($this->form_validation->run() == false) {
-        return $this->load->view('toppage');
+        $ten_tweets = $this->show_tweet();
+        $data['ten_tweets'] = $ten_tweets;
+
+        return $this->load->view('toppage', $data);
       }
 
+      $this->load->view('toppage');
 
       $this->load->model('User_model');
       
-      $this->User_model->tweet_entry($id,$tweet,$tweeted_date);
+      $this->User_model->tweet_entry($name,$tweet,$tweeted_date);
 
-      $ten_tweets = $this->show_tweet();
-      $data['ten_tweets'] = $ten_tweets;
+      $tweet_info = $this->User_model->get_tweetinfo();
 
-      $this->load->view('toppage', $data);
-      var_dump($ten_tweets);
+      $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($tweet_info));
+      return;
 
   }
 
@@ -152,15 +161,18 @@ class Tweet extends CI_Controller
   }
 
 
+  public function GetMoreTweet ()
+  {
+      $tablename = 'tweets';
+      $anotherTen = $this->User_model->getTen($tablename, $this->input->post('oldest_tweetnumber'));
 
+      $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($anotherTen));
+      return;
 
-	// public function index()
- //  {
- //    	$this->login_check();
- //    	$this->load->view('view_tweet');
- //  		}
-
-
+      $this->load->view('');
+  }
 
 
 

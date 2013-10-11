@@ -3,7 +3,6 @@
 <head>
 	<meta charset="utf-8">
 	<title>投稿一覧</title>
-
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -17,32 +16,6 @@
 		color: #4F5155;
 	}
 
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
-
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
-
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
 
 	#body{
 		margin: 0 15px 0 15px;
@@ -63,9 +36,69 @@
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+	<script type="text/javascript"  src="<?php echo base_url("jquery.js");?>">
+      
+        $(function(){
 
-	<script type="text/javascript" src="loadmorejs.js"></script>
+            $('form').submit(function(){
+                var postData = {};
+
+                $('form').find(':input').each(function(){
+                    postData[$(this).attr('name')] = $(this).val();
+                });
+
+                $.ajax({
+                    type : "POST",
+                    url  : "tweet/tweet_entry",
+                    data : postData,
+                    dataType : "json",
+                    success: function(data){
+                        var tweet = data.tweet;
+                        var name = data.name;
+                        var tweet_number = data.tweet_number;
+                        var tweeted_date = data.tweeted_date;
+
+                        clone = $('#moretweet').clone().removeAttr("id").addClass("tw");
+                        $(clone).children(".tweet").html('tweet : ' + tweet);
+                        $(clone).children(".name").html('name : ' + name);
+                        $(clone).children(".tweet_number").html('tweet_number : ' + tweet_number);
+                        $(clone).children(".tweeted_date").html('tweeted_date : ' + tweeted_date);
+
+                        $(clone).prependTo("#tweets");
+                    }
+
+                });
+                return false;
+            });
+
+            $("#get_moretweet").click(function(){
+
+                var oldest_tweetnumber = $(".tweet_add:last").attr('id');
+
+                $.ajax({
+                    type : "POST",
+                    url  : "tweet/GetMoreTweet",
+                    data : {'oldest_tweetnumber': oldest_tweetnumber},
+                    dataType : "json",
+                    success: function(data){
+                    	var data_ = JSON.parse( data );
+
+                        $.each(data, function(i){
+                            clone = $('#moretweet').clone().removeAttr("tweet_number").addClass("tweet_add").attr({tweet_number: data_.tweet_number});
+                            $(clone).children(".tweet").html('tweet : ' + data_.tweet);
+                            $(clone).children(".username").html('name : ' + data_.name);
+                            $(clone).children(".tweet_number").html('tweet_number : ' + data_.tweet_number);
+                            $(clone).children(".tweeted_date").html('tweeted_date : ' + data_.tweeted_date);
+
+                            $("#get_moretweet").before(clone);
+                        });
+                    },
+                });
+                return false;
+            });
+        });
+ 	</script>
+
 </head>
 <body>
 	<header style="background:gray; color:white;">
@@ -74,25 +107,52 @@
 			<a href="logout"><p>ログアウト</p></a>
 		</div>
 	</header>
-	<?php 
+
+	<?php
 	echo validation_errors(); 
 
 	$this->load->helper('form');
 
 	echo form_open('tweet/tweet_entry');
 	?>
-		<textarea name="tweet" cols="140" rows="5"></textarea>
+		<input name='tweet' type='text' size='140' value=''>
 		<input type="submit" value="ツイート">
-	</form>
+	<?php echo form_close(); ?>
 
-	<?php foreach ($ten_tweets as $v) {
-		 echo $v['tweet'];
-		 echo '<br>';
-	};
-	// var_dump($ten_tweets);
+	<p>投稿一覧</p>
 
-	?>
+	<div id="tweets">
+		<div style="border:solid 1px; margin-top:30px;">
+		<?php $i = 0; ?>
+		<?php foreach ($ten_tweets as $v): ?>
+        <div class = "tw" id = "<?php echo $v['tweet_number']; ?>">
+            投稿時間 : <?php echo $v['tweeted_date']; ?><br>
+            ユーザ名 : <?php echo $v['name']; ?><br>
+            tweet : <?php echo $v['tweet']; ?><br>
+            tweet_number : <?php echo $v['tweet_number']; ?><hr>
+        </div>
+        <?php
+            $i++;
+            if($i == 10){
+                $oldest_tweetnumber = $i;
+                break;
+            }
+        ?>
+        <?php endforeach; ?>
+    </div>
+		<div id = "get_moretweet">
+            <p>
+                <a>さらに読み込む</a><br>
+            </p>
+        </div>
 
+        <div id = "moretweet">
+            <span class = "tweet"></span><br>
+            <span class = "name"></span><br>
+            <span class = "tweet_number"></span><br>
+            <span class = "tweeted_date"></span><br>
+        </div>
+    </div>
 
 
 </body>
