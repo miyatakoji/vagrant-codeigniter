@@ -1,7 +1,7 @@
 <?php
-class User_model extends CI_Model {
-    var $title = 'User_model';
-    
+class User_model extends CI_Model
+{
+
     public function check_email($email)
     {
         $this->db->select('email');
@@ -13,16 +13,10 @@ class User_model extends CI_Model {
     }
 
 
-    public function check_pass($pass)
+
+    public function entry($name, $email, $pass, $created)
     {
-        $this->db->like('pass', $pass);
-    }
-
-
-
-    public function entry($name,$email,$pass,$created)
-    {
-        $sql = "INSERT INTO accounts SET name=?,email=?,pass=?,created=?";
+        $sql = "INSERT INTO accounts SET name=?, email=?, pass=?, created=?";
         $this->db->query($sql, array($name, $email, $pass, $created));
     }
 
@@ -30,13 +24,14 @@ class User_model extends CI_Model {
 
     public function login($email)
     {
-        $this->db->select('email,name,id,pass');
+        $this->db->select('email, name, id, pass');
         $this->db->from('accounts');
-        $this->db->where('email',$email);
+        $this->db->where('email', $email);
         $query = $this->db->get();
 
         return $row = $query->row_array();
     }
+
 
 
     public function tweet_entry($name,$tweet,$tweeted_date)
@@ -46,9 +41,10 @@ class User_model extends CI_Model {
     }
 
 
+
     public function show_tweet()
     {
-        $this->db->select('tweet,tweeted_date,name,tweet_number');
+        $this->db->select('tweet, tweeted_date, name, tweet_number');
         $this->db->order_by("tweeted_date", 'DESC');
         $query = $this->db->get('tweets');
 
@@ -68,32 +64,16 @@ class User_model extends CI_Model {
     }
 
 
+
     public function get_moretentweet($oldest_tweetnumber)
     {
-        $this->db->order_by("tubuyaki_time", "desc");
-        $this->db->select('tubuyaki, id, tubuyaki_time, username');
-        $this->db->where('id <', $oldest_tweetnumber);
+        $this->db->select('tweet, tweeted_date, name, tweet_number');
+        $this->db->order_by("tweeted_date", "desc");
+        $this->db->where('tweet_number <', $oldest_tweetnumber);
         $query = $this->db->get('tweets', 10);
 
         $more_tentweet = $query->result_array();
 
         return $more_tentweet;
     }
-
-
-    // public function more_tweet()
-    // {
-    //     $this->db->select('tweet');
-    //     $this->db->order_by("tweeted_date",'DESC');
-    //     $query = $this->db->get('tweets',10);
-
-    //     return $result = $query->result_array();
-
-    // }
-
-
-
-
-
-
 }
