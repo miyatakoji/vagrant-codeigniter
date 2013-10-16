@@ -1,7 +1,7 @@
 <?php
 class User_model extends CI_Model
 {
-
+    //会員登録の時のemail重複確認
     public function check_email($email)
     {
         $this->db->select('email');
@@ -13,7 +13,7 @@ class User_model extends CI_Model
     }
 
 
-
+    //会員登録
     public function entry($name, $email, $pass, $created)
     {
         $sql = "INSERT INTO accounts SET name=?, email=?, pass=?, created=?";
@@ -21,7 +21,7 @@ class User_model extends CI_Model
     }
 
 
-
+    //ログイン
     public function login($email)
     {
         $this->db->select('email, name, id, pass');
@@ -33,7 +33,7 @@ class User_model extends CI_Model
     }
 
 
-
+    //ツイート投稿
     public function tweet_entry($name,$tweet,$tweeted_date)
     {
         $sql = "INSERT INTO tweets SET name=?,tweet=?,tweeted_date=?";
@@ -41,7 +41,7 @@ class User_model extends CI_Model
     }
 
 
-
+    //最新１０件のツイートを返す
     public function show_tweet()
     {
         $this->db->select('tweet, tweeted_date, name, tweet_number');
@@ -52,7 +52,7 @@ class User_model extends CI_Model
     }
 
 
-
+    //ツイートされた内容を登録して、その情報を返す
     public function get_tweetinfo()
     {
         $tweet_number = $this->db->count_all('tweets');
@@ -64,7 +64,7 @@ class User_model extends CI_Model
     }
 
 
-
+    //指定されたツイートナンバーから新しい順に１０個持ってくる
     public function get_moretentweet($oldest_tweetnumber)
     {
         $this->db->select('tweet, tweeted_date, name, tweet_number');

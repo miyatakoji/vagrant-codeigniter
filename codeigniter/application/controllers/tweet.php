@@ -62,7 +62,7 @@ class Tweet extends CI_Controller
     }
 
 
-    //会員登録機能
+    //会員登録機能（バリデーション）
     public function create()
     {
         $name = $this->input->post('name',true);
@@ -86,7 +86,7 @@ class Tweet extends CI_Controller
     }
 
 
-
+    //ログイン確認＆ツイート登録＆ツイート１０件表示orツイートされたデータをjsonで返す
     public function tweet_entry()
     {
         if ($this->session->userdata('USER_STATUS') != 'LOGIN'){
@@ -121,7 +121,7 @@ class Tweet extends CI_Controller
     }
 
 
-
+    //最新ツイートを１０件持ってくる
     public function show_tweet()
     {
         $this->load->model('User_model');
@@ -129,7 +129,7 @@ class Tweet extends CI_Controller
     }
 
 
-
+    //次の１０件を持ってくる
     public function get_moretweet()
     {
         $oldest_tweetnumber = $this->input->post('oldest_tweetnumber');

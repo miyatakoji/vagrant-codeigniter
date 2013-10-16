@@ -10,7 +10,7 @@ class Form extends CI_Controller
     }
 
 
-
+    //会員登録機能（バリデーション）
     public function create()
     {
 
@@ -35,7 +35,7 @@ class Form extends CI_Controller
     }
 
 
-
+    //確認後の本登録
     public function entry()
     {
         $name = $this->session->userdata('name');
@@ -53,7 +53,7 @@ class Form extends CI_Controller
     }
 
 
-
+    //emailバリデーション(callback関数)
     public function already_used_email($email)
     {
         $this->load->model('User_model');
@@ -68,7 +68,7 @@ class Form extends CI_Controller
     }
 
 
-
+    //ログイン機能
     public function login() 
     {
         $email = $this->input->post('email', true);
