@@ -36,8 +36,8 @@
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
-	<script type="text/javascript"  src="<?php echo base_url("jquery.js");?>">
-      
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script>
         $(function(){
 
             $('form').submit(function(){
@@ -46,23 +46,19 @@
                 $('form').find(':input').each(function(){
                     postData[$(this).attr('name')] = $(this).val();
                 });
-
+                console.log(postData);
                 $.ajax({
                     type : "POST",
                     url  : "tweet/tweet_entry",
                     data : postData,
                     dataType : "json",
                     success: function(data){
-                        var tweet = data.tweet;
-                        var name = data.name;
-                        var tweet_number = data.tweet_number;
-                        var tweeted_date = data.tweeted_date;
-
-                        clone = $('#moretweet').clone().removeAttr("id").addClass("tw");
-                        $(clone).children(".tweet").html('tweet : ' + tweet);
-                        $(clone).children(".name").html('name : ' + name);
-                        $(clone).children(".tweet_number").html('tweet_number : ' + tweet_number);
-                        $(clone).children(".tweeted_date").html('tweeted_date : ' + tweeted_date);
+                        
+                        clone = $('#moretweet').clone();
+                        $(clone).children(".tweeted_date").html('投稿時間 : ' + data.tweeted_date);
+                        $(clone).children(".name").html('ユーザ名 : ' + data.name);
+                        $(clone).children(".tweet").html('ツイート : ' + data.tweet);
+                        $(clone).children(".tweet_number").html('投稿番号 : ' + data.tweet_number);
 
                         $(clone).prependTo("#tweets");
                     }
@@ -73,7 +69,7 @@
 
             $("#get_moretweet").click(function(){
 
-                var oldest_tweetnumber = $(".tweet_add:last").attr('id');
+                var oldest_tweetnumber = $(".tweet_add:last").attr('tweet_number');
 
                 $.ajax({
                     type : "POST",
@@ -84,12 +80,12 @@
                     	var data_ = JSON.parse( data );
 
                         $.each(data, function(i){
-                            clone = $('#moretweet').clone().removeAttr("tweet_number").addClass("tweet_add").attr({tweet_number: data_.tweet_number});
-                            $(clone).children(".tweet").html('tweet : ' + data_.tweet);
-                            $(clone).children(".username").html('name : ' + data_.name);
-                            $(clone).children(".tweet_number").html('tweet_number : ' + data_.tweet_number);
-                            $(clone).children(".tweeted_date").html('tweeted_date : ' + data_.tweeted_date);
-
+                            clone = $('#moretweet').clone();
+                            $(clone).children(".tweeted_date").html('投稿時間 : ' + data.tweeted_date);
+                            $(clone).children(".username").html('ユーザ名 : ' + data.name);
+                            $(clone).children(".tweet").html('ツイート : ' + data.tweet);
+                            $(clone).children(".tweet_number").html('投稿番号 : ' + data.tweet_number);
+                            
                             $("#get_moretweet").before(clone);
                         });
                     },
@@ -128,8 +124,8 @@
         <div class = "tw" id = "<?php echo $v['tweet_number']; ?>">
             投稿時間 : <?php echo $v['tweeted_date']; ?><br>
             ユーザ名 : <?php echo $v['name']; ?><br>
-            tweet : <?php echo $v['tweet']; ?><br>
-            tweet_number : <?php echo $v['tweet_number']; ?><hr>
+            ツイート : <?php echo $v['tweet']; ?><br>
+            投稿番号 : <?php echo $v['tweet_number']; ?><hr>
         </div>
         <?php
             $i++;
@@ -142,15 +138,15 @@
     </div>
 		<div id = "get_moretweet">
             <p>
-                <a>さらに読み込む</a><br>
+                <a href="#">さらに読み込む</a><br>
             </p>
         </div>
 
         <div id = "moretweet">
-            <span class = "tweet"></span><br>
-            <span class = "name"></span><br>
-            <span class = "tweet_number"></span><br>
             <span class = "tweeted_date"></span><br>
+            <span class = "name"></span><br>
+            <span class = "tweet"></span><br>
+            <span class = "tweet_number"></span><br>
         </div>
     </div>
 

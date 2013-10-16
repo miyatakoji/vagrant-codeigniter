@@ -67,6 +67,20 @@ class User_model extends CI_Model {
         return $tweet_info = $query->row_array();
     }
 
+
+    public function get_moretentweet($oldest_tweetnumber)
+    {
+        $this->db->order_by("tubuyaki_time", "desc");
+        $this->db->select('tubuyaki, id, tubuyaki_time, username');
+        $this->db->where('id <', $oldest_tweetnumber);
+        $query = $this->db->get('tweets', 10);
+
+        $more_tentweet = $query->result_array();
+
+        return $more_tentweet;
+    }
+
+
     // public function more_tweet()
     // {
     //     $this->db->select('tweet');

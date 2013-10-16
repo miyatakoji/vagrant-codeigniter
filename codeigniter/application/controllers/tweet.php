@@ -23,6 +23,10 @@ class Tweet extends CI_Controller
   }
 
 
+ function go()
+ {
+    $this->load->view('toppage');
+ }
 
 	public function toppage()
   { 
@@ -86,8 +90,6 @@ class Tweet extends CI_Controller
   public function create()
   {
 
-
-
       $name = $this->input->post('name',true);
       $email = $this->input->post('email',true);
       $pass = $this->input->post('pass',true);
@@ -110,7 +112,7 @@ class Tweet extends CI_Controller
       }
   }
 
-  public index(){
+  public function index(){
     if ($this->session->userdata('USER_STATUS') != 'LOGIN'){
         return $this->load->view('login');
     }
@@ -138,14 +140,12 @@ class Tweet extends CI_Controller
         return $this->load->view('toppage', $data);
       }
 
-      $this->load->view('toppage');
-
       $this->load->model('User_model');
       
       $this->User_model->tweet_entry($name,$tweet,$tweeted_date);
 
       $tweet_info = $this->User_model->get_tweetinfo();
-
+      
       $this->output
       ->set_content_type('application/json')
       ->set_output(json_encode($tweet_info));
@@ -163,15 +163,14 @@ class Tweet extends CI_Controller
 
   public function GetMoreTweet ()
   {
-      $tablename = 'tweets';
-      $anotherTen = $this->User_model->getTen($tablename, $this->input->post('oldest_tweetnumber'));
+      $oldest_tweetnumber = $this->input->post('oldest_tweetnumber');
+      $more_tentweet = $this->User_model->get_moretentweet($oldest_tweetnumber);
 
       $this->output
       ->set_content_type('application/json')
-      ->set_output(json_encode($anotherTen));
+      ->set_output(json_encode($more_tentweet));
       return;
 
-      $this->load->view('');
   }
 
 
