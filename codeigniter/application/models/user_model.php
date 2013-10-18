@@ -38,10 +38,10 @@ class User_model extends CI_Model
 
 
     //ツイート投稿
-    public function tweet_entry($name,$tweet,$tweeted)
+    public function tweet_entry($name,$tweet,$tweeted,$id)
     {
-        $sql = "INSERT INTO tweets SET name=?,tweet=?,tweeted_date=?";
-        $this->db->query($sql, array($name,$tweet,$tweeted_date));
+        $sql = "INSERT INTO tweets SET name=?,tweet=?,tweeted=?,id=?";
+        $this->db->query($sql, array($name,$tweet,$tweeted,$id));
     }
 
 
@@ -80,7 +80,7 @@ class User_model extends CI_Model
         $query = $this->db->get('tweets', 10);
 
         $more_tentweet = $query->result_array();
-
+        var_dump($more_tentweet);
         return $more_tentweet;
     }
 }

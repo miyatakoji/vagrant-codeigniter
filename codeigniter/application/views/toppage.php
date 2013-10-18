@@ -14,7 +14,7 @@
     }
 
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 </head>
 <body>
     <header style="background:gray; color:white;">
@@ -85,14 +85,13 @@
                     data : postData,
                     dataType : "json",
                     success : function(data){
+                        var v = data.serialize();
                         console.log(data);
-                        var t = JSON.stringify( data );
                         clone = $('#moretweet').clone();
-                        areat(t);
-                        $(clone).children(".tweeted").html('投稿時間 : ' + this.tweeted);
-                        $(clone).children(".name").html('ユーザ名 : ' + data.name);
-                        $(clone).children(".tweet").html('ツイート : ' + data.tweet);
-                        $(clone).children(".tweet_id").html('投稿番号 : ' + data.tweet_id);
+                        $(clone).children(".tweeted").html('投稿時間 : ' + v.tweeted);
+                        $(clone).children(".name").html('ユーザ名 : ' + v.name);
+                        $(clone).children(".tweet").html('ツイート : ' + v.tweet);
+                        $(clone).children(".tweet_id").html('投稿番号 : ' + v.tweet_id);
 
                         $(clone).prependTo("#tweets");
                         }

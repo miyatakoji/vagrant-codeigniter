@@ -76,7 +76,7 @@
 
             $this->load->helper('form');
 
-            echo form_open('tweet/login');
+            echo form_open('form/login');
             ?>
             <h5>メールアドレスを入力してください</h5>
             <input name="email" id="email" value="<?php echo set_value('email'); ?>">

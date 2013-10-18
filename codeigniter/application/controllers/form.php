@@ -51,7 +51,7 @@ class Form extends CI_Controller
 
         $this->session->sess_destroy();
 
-        redirect('tweet/login', 'location');
+        redirect('form/login', 'location');
     }
 
 
@@ -69,4 +69,62 @@ class Form extends CI_Controller
         };
     }
 
+
+
+ public function login()
+    {
+        $email = $this->input->post('email', true);
+        $postpass = $this->input->post('pass', true);
+        $pass = $this->encrypt->sha1("$postpass");
+        $this->form_validation->set_rules('pass', 'パスワード', 'required');
+        $this->form_validation->set_rules('email', 'メールアドレス', 'required|valid_email|callback_un_entried_info');
+
+        if ($this->form_validation->run() == false) {
+            return $this->load->view('login');
+        }
+
+        $this->load->model('User_model');
+        $get_userdata = $this->User_model->login($email, $pass);
+        if (($get_userdata['email'] === $email)&&($get_userdata['pass'] === $pass)) {
+            $this->session->set_userdata('USERNAME', $get_userdata['name']);
+            $this->session->set_userdata('USER_STATUS', 'LOGIN');
+            $this->session->set_userdata('USER_ID',$get_userdata['id']);
+            
+            return $this->load->view('login_success');
+        }
+    }
+
+
+
+    //ログアウト
+    public function logout() 
+    {
+        $this->session->sess_destroy();
+        redirect('form/login', 'location');
+    }
+
+
+
+    //ログイン後ここに移動する
+    public function toppage()
+    {
+        $USER_STATUS = $this->session->userdata('USER_STATUS');
+        if ( $USER_STATUS = 'LOGIN') {
+            $ten_tweets = $this->show_tweet();
+            $data['ten_tweets'] = $ten_tweets;
+            return $this->load->view('toppage', $data);
+        } else {
+            $this->load->view('login');
+        }
+    }
+
+
+
+    
+    //最新ツイートを１０件持ってくる
+    public function show_tweet()
+    {
+        $this->load->model('User_model');
+        return $this->User_model->show_tweet();
+    }
 }
