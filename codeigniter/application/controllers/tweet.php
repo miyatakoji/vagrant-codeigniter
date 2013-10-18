@@ -76,6 +76,7 @@ class Tweet extends CI_Controller
     //次の１０件を持ってくる
     public function geting_moretweet()
     {
+        $this->load->model('User_model');
         $oldest_tweetnumber = $this->input->post('oldest_tweetnumber');
         $more_tentweet = $this->User_model->get_moretentweet($oldest_tweetnumber);
 

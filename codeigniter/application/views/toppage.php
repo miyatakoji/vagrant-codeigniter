@@ -13,8 +13,12 @@
         color: #4F5155;
     }
 
+    .tw {
+        border:solid 1px; margin-top:30px;
+    }
+
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
     <header style="background:gray; color:white;">
@@ -37,7 +41,7 @@
     <?php echo form_close(); ?>
     <p>投稿一覧</p>
     <div id="tweets">
-        <div style="border:solid 1px; margin-top:30px;">
+        <div>
         <?php $i = 0; ?>
         <?php foreach ($ten_tweets as $v): ?>
         <div class = "tw" id = "<?php echo $v['tweet_id']; ?>">
@@ -81,7 +85,7 @@
                 console.log(postData);
                 $.ajax({
                     type : "POST",
-                    url  : "tweet/tweet_entry",
+                    url  : "tweet_entry",
                     data : postData,
                     dataType : "json",
                     success : function(data){
@@ -106,7 +110,7 @@
 
                 $.ajax({
                     type : "GET",
-                    url  : "tweet/geting_moretweet",
+                    url  : "geting_moretweet",
                     data : {'oldest_tweetnumber': oldest_tweetnumber},
                     dataType : "json",
                     success: function(data){
