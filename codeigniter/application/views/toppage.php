@@ -59,7 +59,7 @@
         ?>
         <?php endforeach; ?>
     </div>
-        <div id = "get_moretweet" class = "tw" name = "<?php echo $i; ?>">
+        <div id = "get_moretweet" name = "<?php echo $i; ?>">
             <p>
                 <input id="get_moretweet" type="button" value="さらに読み込む"><br>
             </p>
@@ -75,7 +75,7 @@
 
         $(function(){
             //ツイートボタンが押されたら、非同期で投稿されたツイートを表示する
-            $('form').submit(function(event){
+            $("form").submit(function(event){
                 event.preventDefault();
                 var postData = {};
 
@@ -86,10 +86,10 @@
                 $.ajax({
                     type : "POST",
                     url  : "tweet_entry",
-                    data : postData,
+                    data : postData.serialize(),
                     dataType : "json",
                     success : function(data){
-                        var v = data.serialize();
+                        // var v = data.serialize();
                         console.log(data);
                         clone = $('#moretweet').clone();
                         $(clone).children(".tweeted").html('投稿時間 : ' + v.tweeted);
@@ -106,21 +106,24 @@
             //次の１０件を持ってくる
             $("#get_moretweet").click(function(){
 
-                var oldest_tweetnumber = $(".tw:last").attr('tweet_id');
+                var oldest_tweetnumber = $(".tw:last").attr('id');
+                console.log(oldest_tweetnumber);
 
                 $.ajax({
                     type : "GET",
                     url  : "geting_moretweet",
-                    data : {'oldest_tweetnumber': oldest_tweetnumber},
+                    data : {
+                        oldest_tweetnumberdayo : "oldest_tweetnumber"
+                    },
                     dataType : "json",
                     success: function(data){
-
+                        var name = data[0]
                         $.each(data, function(i){
-                            clone = $('#moretweet').clone().removeAttr("tweet_id").addClass("tw").attr({tweet_id: data.tweet_id});
-                            $(clone).children(".tweeted").html('投稿時間 : ' + data.tweeted);
-                            $(clone).children(".username").html('ユーザ名 : ' + data.name);
-                            $(clone).children(".tweet").html('ツイート : ' + data.tweet);
-                            $(clone).children(".tweet_id").html('投稿番号 : ' + data.tweet_id);
+                            clone = $('#moretweet').clone().removeAttr("tweet_id").addClass("tw").attr({tweet_id: data[0].tweet_id});
+                            $(clone).children(".tweeted").html('投稿時間 : ' + data[0].tweeted);
+                            $(clone).children(".name").html('ユーザ名 : ' + data[0].name);
+                            $(clone).children(".tweet").html('ツイート : ' + data[0].tweet);
+                            $(clone).children(".tweet_id").html('投稿番号 : ' + data[0].tweet_id);
 
                             $("#get_moretweet").before(clone);
                         });

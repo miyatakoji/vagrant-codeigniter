@@ -76,9 +76,10 @@ class User_model extends CI_Model
     {
         $this->db->select('tweet, tweeted, name, tweet_id');
         $this->db->order_by("tweeted", "desc");
-        $this->db->where('tweet_id', 156);
+        $this->db->where('tweet_id <', $oldest_tweetnumber); 
         $query = $this->db->get('tweets', 10);
 
-        return $more_tentweet = $query->result_array();
+        $more_tentweet = $query->result_array();
+        return $more_tentweet;
     }
 }
