@@ -134,9 +134,12 @@ class Form extends CI_Controller
         $this->form_validation->set_rules('tweettext', 'ツイート', 'required|max_length[140]');
 
         if ($this->form_validation->run() == false) {
-            $ten_tweets = $this->show_tweet();
-            $data['ten_tweets'] = $ten_tweets;
-            return $this->load->view('toppage', $data);
+
+            echo validation_errors();
+            return;
+            // $ten_tweets = $this->show_tweet();
+            // $data['ten_tweets'] = $ten_tweets;
+            // return $this->load->view('toppage', $data);
         }
 
         $this->load->model('User_model');

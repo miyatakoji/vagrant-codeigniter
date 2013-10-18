@@ -39,12 +39,14 @@ class Tweet extends CI_Controller
         $tweeted = date("Y-m-d H:i:s");
         $id = $this->session->userdata('USER_ID');
 
-        $this->form_validation->set_rules('tweet', 'ツイート', 'required|max_length[140]');
+        $this->form_validation->set_rules('tweet', 'ツイート', 'required');
 
         if ($this->form_validation->run() == false) {
-            $ten_tweets = $this->show_tweet();
-            $data['ten_tweets'] = $ten_tweets;
-            return $this->load->view('toppage', $data);
+            return echo "ツイートは必須です";
+
+            // $ten_tweets = $this->show_tweet();
+            // $data['ten_tweets'] = $ten_tweets;
+            // return $this->load->view('toppage', $data);
         }
 
         $this->load->model('User_model');

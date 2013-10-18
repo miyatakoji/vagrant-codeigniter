@@ -35,8 +35,9 @@
 
     echo form_open('tweet/tweet_entry');
     ?>
+        <span id="error-memo"></span>
 
-        <input id="tweet-text" name='tweet' type='text' size='140'>
+        <input id="tweet-text" value="" name='tweet' type='text' size='140'>
         <input type="submit" value="ツイート">
     <?php echo form_close(); ?>
     <p>投稿一覧</p>
@@ -96,6 +97,10 @@
                         $(clone).children(".tweet_id").html('投稿番号 : ' + data.tweet_id);
 
                         $(clone).prependTo("#tweets");
+                        $("#tweet-text").val('');
+                        if (data = null) {
+                            alert("<p>ツイート 欄は必須です。</p>");
+                        }
                         }
                 });
                 return false;
