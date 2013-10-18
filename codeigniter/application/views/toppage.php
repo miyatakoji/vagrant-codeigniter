@@ -36,7 +36,7 @@
     echo form_open('tweet/tweet_entry');
     ?>
 
-        <input name='tweet' type='text' size='140'>
+        <input id="tweet-text" name='tweet' type='text' size='140'>
         <input type="submit" value="ツイート">
     <?php echo form_close(); ?>
     <p>投稿一覧</p>
@@ -77,25 +77,23 @@
             //ツイートボタンが押されたら、非同期で投稿されたツイートを表示する
             $('form').submit(function(event){
                 event.preventDefault();
-                var postData = {};
+                var postData = $("#tweet-text").val();
 
-                $("form input:first")(function(){
-                    postData[$(this).attr('name')] = $(this).val();
-                });
                 console.log(postData);
                 $.ajax({
                     type : "POST",
                     url  : "tweet_entry",
-                    data : postData,
+                    data : {
+                        'tweettext' : postData
+                    },
                     dataType : "json",
                     success : function(data){
-                        // var v = data.serialize();
                         console.log(data);
-                        clone = $('#moretweet').clone();
-                        $(clone).children(".tweeted").html('投稿時間 : ' + v.tweeted);
-                        $(clone).children(".name").html('ユーザ名 : ' + v.name);
-                        $(clone).children(".tweet").html('ツイート : ' + v.tweet);
-                        $(clone).children(".tweet_id").html('投稿番号 : ' + v.tweet_id);
+                        clone = $('#moretweet').clone().addClass("tw");
+                        $(clone).children(".tweeted").html('投稿時間 : ' + data.tweeted);
+                        $(clone).children(".name").html('ユーザ名 : ' + data.name);
+                        $(clone).children(".tweet").html('ツイート : ' + data.tweet);
+                        $(clone).children(".tweet_id").html('投稿番号 : ' + data.tweet_id);
 
                         $(clone).prependTo("#tweets");
                         }

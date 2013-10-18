@@ -119,6 +119,39 @@ class Form extends CI_Controller
     }
 
 
+ //ログイン確認＆ツイート登録＆ツイート１０件表示orツイートされたデータをjsonで返す
+    public function tweet_entry()
+    {
+        if ($this->session->userdata('USER_STATUS') != 'LOGIN'){
+            return $this->load->view('login');
+        }
+
+        $tweet = $this->input->post('tweettext', true);
+        $name = $this->session->userdata('USERNAME');
+        $tweeted = date("Y-m-d H:i:s");
+        $id = $this->session->userdata('USER_ID');
+
+        $this->form_validation->set_rules('tweettext', 'ツイート', 'required|max_length[140]');
+
+        if ($this->form_validation->run() == false) {
+            $ten_tweets = $this->show_tweet();
+            $data['ten_tweets'] = $ten_tweets;
+            return $this->load->view('toppage', $data);
+        }
+
+        $this->load->model('User_model');
+
+        $this->User_model->tweet_entry($name,$tweet,$tweeted,$id);
+
+        $tweet_info = $this->User_model->get_tweetinfo();
+
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($tweet_info));
+        return;
+    }
+
+
 
 
     //次の１０件を持ってくる
