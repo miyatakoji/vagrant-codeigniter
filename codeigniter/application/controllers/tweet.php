@@ -52,12 +52,7 @@ class Tweet extends CI_Controller
         $this->User_model->tweet_entry($name,$tweet,$tweeted,$id);
 
         $tweet_info = $this->User_model->get_tweetinfo();
-        // var_dump($tweet_info);
-        // header('Content-type: application/json');
-        // echo json_encode($tweet_info);
 
-        // return $tweet_info;
-        
         $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($tweet_info));
@@ -78,8 +73,7 @@ class Tweet extends CI_Controller
     {
         $this->load->model('User_model');
         $oldest_tweetnumber = $this->input->get('oldest_tweetnumberdayo',true);
-        $more_tentweet = $this->User_model->get_moretentweet($oldest_tweetnumber);
-        var_dump($oldest_tweetnumber);
+        $more_tentweet = $this->User_model->get_moretentweet($oldest_tweetnumber
 
         $this->output
         ->set_content_type('application/json')

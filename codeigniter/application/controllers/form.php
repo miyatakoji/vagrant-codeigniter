@@ -120,7 +120,22 @@ class Form extends CI_Controller
 
 
 
-    
+
+    //次の１０件を持ってくる
+    public function geting_moretweet()
+    {
+        $this->load->model('User_model');
+        $oldest_tweetnumber = $this->input->get('oldest_tweetnumberdayo',true);
+        $more_tentweet = $this->User_model->get_moretentweet($oldest_tweetnumber);
+
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($more_tentweet));
+        return;
+    }
+
+
+
     //最新ツイートを１０件持ってくる
     public function show_tweet()
     {
