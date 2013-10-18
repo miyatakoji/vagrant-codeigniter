@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>ログイン画面</title>
+    <title>ログイン成功！</title>
 
     <style type="text/css">
 
@@ -65,32 +65,22 @@
     </style>
 </head>
 <body>
-
-<div id="container">
-    <h1>ログイン画面</h1>
+    <header style="background:gray; color:white;">
+        <div>
+            <p><?php echo $this->session->userdata('USERNAME'); ?>さん</p>
+            <a href="logout"><p>ログアウト</p></a>
+        </div>
+    </header>
+    <div id="container">
+    <h1>ログインに成功しました！！</h1>
 
         <div id="body">
+            <a href="toppage"><input type="button" value="ツイートを見る"></a>
+        </div>
 
-            <?php
-            echo validation_errors();
 
-            $this->load->helper('form');
-
-            echo form_open('tweet/login');
-            ?>
-            <h5>メールアドレスを入力してください</h5>
-            <input name="email" id="email" value="<?php echo set_value('email'); ?>">
-            <hr size="1" color="#D0D0D0">
-            <h5>パスワードを入力してください</h5>
-            <input name="pass" id="pass" value="<?php echo set_value('pass'); ?>">
-            <hr size="1" color="#D0D0D0">
-            <br>
-            <input type="submit" value="ログイン">
-            <p><a href='create'> ユーザ登録はこちらから </a></p>
     </div>
-
-
-</div>
 
 </body>
 </html>
+

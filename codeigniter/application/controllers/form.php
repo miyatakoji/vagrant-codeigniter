@@ -1,26 +1,18 @@
 <?php
 class Form extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
         $this->load->helper(array('url', 'cookie', 'security', 'form'));
-        $this->load->library(array('session', 'form_validation'));
+        $this->load->library(array('session', 'form_validation','encrypt'));
     }
+
 
 
     //会員登録機能（バリデーション）
     public function create()
     {
-
-        $name = $this->input->post('name', true);
-        $email = $this->input->post('email', true);
-        $pass = $this->input->post('pass', true);
-        $this->session->set_userdata(array(
-            'name' => $name,
-            'email' => $email,
-            'pass' => $pass));
 
         $this->form_validation->set_rules('name', 'ユーザ名', 'required|alpha_numeric');
         $this->form_validation->set_rules('email', 'メールアドレス', 'required|valid_email|callback_already_used_email');
@@ -30,6 +22,15 @@ class Form extends CI_Controller
         if ($this->form_validation->run() == false) {
             return $this->load->view('entry.php');
         } else {
+            $name = $this->input->post('name', true);
+            $email = $this->input->post('email', true);
+            $postpass = $this->input->post('pass', true);
+            $pass = $this->encrypt->sha1("$postpass");
+            $this->session->set_userdata(array(
+                'name' => $name,
+                'email' => $email,
+                'pass' => $pass));
+
             $this->load->view('entry_check.php');
         }
     }
@@ -68,17 +69,17 @@ class Form extends CI_Controller
     }
 
 
-    //ログイン機能
-    public function login() 
-    {
-        $email = $this->input->post('email', true);
-        $password = $this->input->post('pass', true);
-        if (($email == true) && ($pass == true)){
-            $this->session->set_userdata('user_email','$email');
-            $this->session->set_userdata('logged_in', true);
-            redirect('login_check', 'location');
-        } else {
-            $this->load->view('login');
-        }
-    }
+    // //ログイン機能
+    // public function login() 
+    // {
+    //     $email = $this->input->post('email', true);
+    //     $password = $this->input->post('pass', true);
+    //     if (($email == true) && ($pass == true)){
+    //         $this->session->set_userdata('user_email','$email');
+    //         $this->session->set_userdata('logged_in', true);
+    //         redirect('login_check', 'location');
+    //     } else {
+    //         $this->load->view('login');
+    //     }
+    // }
 }

@@ -6,9 +6,6 @@
     <style type="text/css">
 
     ::selection{ background-color: #E13300; color: white; }
-    ::moz-selection{ background-color: #E13300; color: white; }
-    ::webkit-selection{ background-color: #E13300; color: white; }
-
     body {
         background-color: #fff;
         margin: 40px;
@@ -16,88 +13,13 @@
         color: #4F5155;
     }
 
-    #body {
-        margin: 0 15px 0 15px;
-    }
-
-    p.footer {
-        text-align: right;
-        font-size: 11px;
-        border-top: 1px solid #D0D0D0;
-        line-height: 32px;
-        padding: 0 10px 0 10px;
-        margin: 20px 0 0 0;
-    }
-
-    #container {
-        margin: 10px;
-        border: 1px solid #D0D0D0;
-        -webkit-box-shadow: 0 0 8px #D0D0D0;
-    }
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script>
-        $(function(){
-
-            $('form').submit(function(){
-                var postData = {};
-
-                $('form').find(':input').(function(){
-                    postData[$(this).attr('name')] = $(this).val();
-                });
-                console.log(postData);
-                $.ajax({
-                    type : "POST",
-                    url  : "tweet/tweet_entry",
-                    data : postData,
-                    dataType : "json",
-                    success : function(data){
-                        console.log(data);
-                        clone = $('#moretweet').clone();
-                        $(clone).children(".tweeted_date").html('投稿時間 : ' + this.tweeted_date);
-                        $(clone).children(".name").html('ユーザ名 : ' + data.name);
-                        $(clone).children(".tweet").html('ツイート : ' + data.tweet);
-                        $(clone).children(".tweet_number").html('投稿番号 : ' + data.tweet_number);
-
-                        $(clone).prependTo("#tweets");
-                        }
-
-                });
-                return false;
-            });
-
-            $("#get_moretweet").click(function(){
-
-                var oldest_tweetnumber = $(".tw:last").attr('tweet_number');
-
-                $.ajax({
-                    type : "POST",
-                    url  : "tweet/get_moretweet",
-                    data : {'oldest_tweetnumber': oldest_tweetnumber},
-                    dataType : "json",
-                    success: function(data){
-
-                        $.each(data, function(i){
-                            clone = $('#get_moretweet').clone().removeAttr("tweet_number").addClass("tw").attr({tweet_number: data.tweet_number});
-                            $(clone).children(".tweeted_date").html('投稿時間 : ' + data.tweeted_date);
-                            $(clone).children(".username").html('ユーザ名 : ' + data.name);
-                            $(clone).children(".tweet").html('ツイート : ' + data.tweet);
-                            $(clone).children(".tweet_number").html('投稿番号 : ' + data.tweet_number);
-
-                            $("#get_moretweet").before(clone);
-                        });
-                    },
-                });
-                return false;
-            });
-        });
-    </script>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
     <header style="background:gray; color:white;">
         <div>
-            <p><?php echo $this->session->userdata('USERNAME'); ?></p>
+            <p><?php echo $this->session->userdata('USERNAME'); ?>さん</p>
             <a href="logout"><p>ログアウト</p></a>
         </div>
     </header>
@@ -118,11 +40,11 @@
         <div style="border:solid 1px; margin-top:30px;">
         <?php $i = 0; ?>
         <?php foreach ($ten_tweets as $v): ?>
-        <div class = "tw" id = "<?php echo $v['tweet_number']; ?>">
-            投稿時間 : <?php echo $v['tweeted_date']; ?><br>
+        <div class = "tw" id = "<?php echo $v['tweet_id']; ?>">
+            投稿時間 : <?php echo $v['tweeted']; ?><br>
             ユーザ名 : <?php echo $v['name']; ?><br>
             ツイート : <?php echo $v['tweet']; ?><br>
-            投稿番号 : <?php echo $v['tweet_number']; ?><hr>
+            投稿番号 : <?php echo $v['tweet_id']; ?><hr>
         </div>
         <?php
             $i++;
@@ -133,17 +55,78 @@
         ?>
         <?php endforeach; ?>
     </div>
-		<div id = "get_moretweet" class = "tw" name = "<?php echo $i; ?>">
+        <div id = "get_moretweet" class = "tw" name = "<?php echo $i; ?>">
             <p>
                 <input id="get_moretweet" type="button" value="さらに読み込む"><br>
             </p>
         </div>
         <div id = "moretweet">
-            <span class = "tweeted_date"></span><br>
+            <span class = "tweeted"></span><br>
             <span class = "name"></span><br>
             <span class = "tweet"></span><br>
-            <span class = "tweet_number"></span><br>
+            <span class = "tweet_id"></span><br>
         </div>
     </div>
+    <script>
+
+        $(function(){
+            //ツイートボタンが押されたら、非同期で投稿されたツイートを表示する
+            $('form').submit(function(event){
+                event.preventDefault();
+                var postData = {};
+
+                $('form input:first')(function(){
+                    postData[$(this).attr('name')] = $(this).val();
+                });
+                console.log(postData);
+                $.ajax({
+                    type : "POST",
+                    url  : "tweet/tweet_entry",
+                    data : postData,
+                    dataType : "json",
+                    success : function(data){
+                        console.log(data);
+                        var t = JSON.stringify( data );
+                        clone = $('#moretweet').clone();
+                        areat(t);
+                        $(clone).children(".tweeted").html('投稿時間 : ' + this.tweeted);
+                        $(clone).children(".name").html('ユーザ名 : ' + data.name);
+                        $(clone).children(".tweet").html('ツイート : ' + data.tweet);
+                        $(clone).children(".tweet_id").html('投稿番号 : ' + data.tweet_id);
+
+                        $(clone).prependTo("#tweets");
+                        }
+                });
+                return false;
+            });
+
+            //次の１０件を持ってくる
+            $("#get_moretweet").click(function(){
+
+                var oldest_tweetnumber = $(".tw:last").attr('tweet_id');
+
+                $.ajax({
+                    type : "GET",
+                    url  : "tweet/geting_moretweet",
+                    data : {'oldest_tweetnumber': oldest_tweetnumber},
+                    dataType : "json",
+                    success: function(data){
+
+                        $.each(data, function(i){
+                            clone = $('#moretweet').clone().removeAttr("tweet_id").addClass("tw").attr({tweet_id: data.tweet_id});
+                            $(clone).children(".tweeted").html('投稿時間 : ' + data.tweeted);
+                            $(clone).children(".username").html('ユーザ名 : ' + data.name);
+                            $(clone).children(".tweet").html('ツイート : ' + data.tweet);
+                            $(clone).children(".tweet_id").html('投稿番号 : ' + data.tweet_id);
+
+                            $("#get_moretweet").before(clone);
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+
+    </script>
 </body>
 </html>
