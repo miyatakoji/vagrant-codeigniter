@@ -29,6 +29,7 @@ class Form extends CI_Controller
             $this->session->set_userdata(array(
                 'name' => $name,
                 'email' => $email,
+                'postpass' => $postpass,
                 'pass' => $pass));
 
             $this->load->view('entry_check.php');
@@ -50,7 +51,7 @@ class Form extends CI_Controller
 
         $this->session->sess_destroy();
 
-        redirect('tweet/toppage', 'location');
+        redirect('tweet/login', 'location');
     }
 
 
@@ -68,18 +69,4 @@ class Form extends CI_Controller
         };
     }
 
-
-    // //ログイン機能
-    // public function login() 
-    // {
-    //     $email = $this->input->post('email', true);
-    //     $password = $this->input->post('pass', true);
-    //     if (($email == true) && ($pass == true)){
-    //         $this->session->set_userdata('user_email','$email');
-    //         $this->session->set_userdata('logged_in', true);
-    //         redirect('login_check', 'location');
-    //     } else {
-    //         $this->load->view('login');
-    //     }
-    // }
 }

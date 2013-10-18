@@ -78,21 +78,19 @@
             ?>
 
             <h5>名前</h5>
-            <input name="name" value="<?php echo set_value('name'); ?>">
+            <?php echo set_value('name'); ?>
             <hr size="1" color="#D0D0D0">
 
             <h5>メールアドレス</h5>
-            <input name="email" value="<?php echo set_value('email'); ?>">
+            <?php echo set_value('email'); ?>
             <hr size="1" color="#D0D0D0">
 
             <h5>パスワード</h5>
-            <input name="pass" value="<?php echo set_value('pass'); ?>">
+            <?php echo set_value('pass'); ?>
             <hr size="1" color="#D0D0D0">
 
             <br><input type="submit" name="button" id="button" value="登録">
-            <?php echo anchor('form/create','編集する');?>
-            <br><a href="create"><input type="button" value="編集する"></a>
-
+            <br><a href=""><input type="button" onclick="history.back()"; value="編集する"></a>
             </form>
         </div>
 

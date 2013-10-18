@@ -65,6 +65,12 @@
     </style>
 </head>
 <body>
+    <?php 
+    $name = $this->session->userdata('name');
+    $email = $this->session->userdata('email');
+    $pass = $this->session->userdata('postpass');
+    $passconf = $this->session->userdata('postpass');
+    ?>
 
 <div id="container">
     <h1>会員登録画面</h1>
@@ -78,19 +84,19 @@
         ?>
 
         <h5>名前(英数字のみ)</h5>
-        <input name="name" id="name" value="<?php echo set_value("name"); ?>">
+        <input name="name" id="name" value="<?php echo $name; ?>">
         <hr size="1" color="#D0D0D0">
 
         <h5>メールアドレス</h5>
-        <input name="email" id="email" value="<?php echo set_value('email'); ?>">
+        <input name="email" id="email" value="<?php echo $email; ?>">
         <hr size="1" color="#D0D0D0">
 
         <h5>パスワードを設定してください(6文字以上)</h5>
-        <input name="pass" id="pass" value="<?php echo set_value('pass'); ?>">
+        <input name="pass" id="pass" value="<?php echo $pass; ?>">
         <hr size="1" color="#D0D0D0">
 
         <h5>パスワードの確認</h5>
-        <input name="passconf" id="passconf" value="<?php echo set_value('passconf'); ?>">
+        <input name="passconf" id="passconf" value="<?php echo $pass; ?>">
         <hr size="1" color="#D0D0D0">
         <br>
 
